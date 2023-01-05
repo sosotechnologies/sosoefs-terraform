@@ -1,7 +1,5 @@
-################################################################################
-# File System
-################################################################################
 
+# File System
 output "arn" {
   description = "Amazon Resource Name of the file system"
   value       = try(aws_efs_file_system.sosotech[0].arn, null)
@@ -22,19 +20,15 @@ output "size_in_bytes" {
   value       = try(aws_efs_file_system.sosotech[0].size_in_bytes, null)
 }
 
-################################################################################
 # Mount Target(s)
-################################################################################
 
 output "mount_targets" {
   description = "Map of mount targets created and their attributes"
   value       = aws_efs_mount_target.sosotech
 }
 
-################################################################################
-# Security Group
-################################################################################
 
+# Security Group
 output "security_group_arn" {
   description = "ARN of the security group"
   value       = try(aws_security_group.sosotech[0].arn, null)
@@ -45,19 +39,15 @@ output "security_group_id" {
   value       = try(aws_security_group.sosotech[0].id, null)
 }
 
-################################################################################
-# Access Point(s)
-################################################################################
 
+# Access Point(s)
 output "access_points" {
   description = "Map of access points created and their attributes"
   value       = aws_efs_access_point.sosotech
 }
 
-################################################################################
-# Replication Configuration
-################################################################################
 
+# Replication Configuration
 output "replication_configuration_destination_file_system_id" {
   description = "The file system ID of the replica"
   value       = try(aws_efs_replication_configuration.sosotech[0].destination[0].file_system_id, null)

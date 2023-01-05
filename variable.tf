@@ -16,10 +16,8 @@ variable "tags" {
   default     = {}
 }
 
-################################################################################
-# File System
-################################################################################
 
+# File System
 variable "availability_zone_name" {
   description = "The AWS Availability Zone in which to create the file system. Used to create a file system that uses One Zone storage classes"
   type        = string
@@ -68,10 +66,7 @@ variable "lifecycle_policy" {
   default     = {}
 }
 
-################################################################################
 # File System Policy
-################################################################################
-
 variable "attach_policy" {
   description = "Determines whether a policy is attached to the file system"
   type        = bool
@@ -102,20 +97,14 @@ variable "policy_statements" {
   default     = []
 }
 
-################################################################################
 # Mount Target(s)
-################################################################################
-
 variable "mount_targets" {
   description = "A map of mount target definitions to create"
   type        = any
   default     = {}
 }
 
-################################################################################
 # Security Group
-################################################################################
-
 variable "create_security_group" {
   description = "Determines whether a security group is created"
   type        = bool
@@ -152,20 +141,14 @@ variable "security_group_rules" {
   default     = {}
 }
 
-################################################################################
 # Access Point(s)
-################################################################################
-
 variable "access_points" {
   description = "A map of access point definitions to create"
   type        = any
   default     = {}
 }
 
-################################################################################
 # Backup Policy
-################################################################################
-
 variable "create_backup_policy" {
   description = "Determines whether a backup policy is created"
   type        = bool
@@ -178,10 +161,7 @@ variable "enable_backup_policy" {
   default     = true
 }
 
-################################################################################
 # Replication Configuration
-################################################################################
-
 variable "create_replication_configuration" {
   description = "Determines whether a replication configuration is created"
   type        = bool

@@ -1,5 +1,5 @@
 repos:
-  - repo: https://github.com/soso
+  - repo: https://github.com/sosotechnologies/sosoefs-terraform.git
     rev: v1.77.0
     hooks:
       - id: terraform_fmt

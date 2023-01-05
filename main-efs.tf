@@ -1,7 +1,4 @@
-################################################################################
 # File System
-################################################################################
-
 resource "aws_efs_file_system" "sosotech" {
   count = var.create ? 1 : 0
 
@@ -28,9 +25,8 @@ resource "aws_efs_file_system" "sosotech" {
   )
 }
 
-################################################################################
+
 # File System Policy
-################################################################################
 
 data "aws_iam_policy_document" "policy" {
   count = var.create && var.attach_policy ? 1 : 0
@@ -106,9 +102,7 @@ resource "aws_efs_file_system_policy" "sosotech" {
   policy                             = data.aws_iam_policy_document.policy[0].json
 }
 
-################################################################################
 # Mount Target(s)
-################################################################################
 
 resource "aws_efs_mount_target" "sosotech" {
   for_each = { for k, v in var.mount_targets : k => v if var.create }
@@ -119,10 +113,7 @@ resource "aws_efs_mount_target" "sosotech" {
   subnet_id       = each.value.subnet_id
 }
 
-################################################################################
 # Security Group
-################################################################################
-
 locals {
   security_group_name = try(coalesce(var.security_group_name, var.name), "")
 }
@@ -157,10 +148,7 @@ resource "aws_security_group_rule" "sosotech" {
   source_security_group_id = try(each.value.source_security_group_id, null)
 }
 
-################################################################################
 # Access Point(s)
-################################################################################
-
 resource "aws_efs_access_point" "sosotech" {
   for_each = { for k, v in var.access_points : k => v if var.create }
 
@@ -201,10 +189,7 @@ resource "aws_efs_access_point" "sosotech" {
   )
 }
 
-################################################################################
 # Backup Policy
-################################################################################
-
 resource "aws_efs_backup_policy" "sosotech" {
   count = var.create && var.create_backup_policy ? 1 : 0
 
@@ -215,10 +200,8 @@ resource "aws_efs_backup_policy" "sosotech" {
   }
 }
 
-################################################################################
-# Replication Configuration
-################################################################################
 
+# Replication Configuration
 resource "aws_efs_replication_configuration" "sosotech" {
   count = var.create && var.create_replication_configuration ? 1 : 0
 
