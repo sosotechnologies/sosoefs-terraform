@@ -11,17 +11,14 @@ locals {
   tags = {
     Name       = local.name
     Example    = local.name
-    Repository = "https://github.com/terraform-aws-modules/terraform-aws-efs"
+    Repository = "https://github.com/sosotechnologies/sosoefs-terraform.git"
   }
 }
 
 data "aws_availability_zones" "available" {}
 data "aws_caller_identity" "current" {}
 
-################################################################################
 # EFS Module
-################################################################################
-
 module "efs" {
   source = "../.."
 
@@ -121,10 +118,7 @@ module "efs_disabled" {
   create = false
 }
 
-################################################################################
 # Supporting Resources
-################################################################################
-
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 3.0"
