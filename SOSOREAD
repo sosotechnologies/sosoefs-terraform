@@ -1,2 +1,38 @@
-https://docs.aws.amazon.com/efs/latest/ug/efs-access-points.html
+# EFS
+### What will be done
+For this write, we will achieve two key factors.
+1.	Create an EFS through dynamic provisioning
+2.	Deploy a CSI Driver which will dynamically provisioned volume created through EFS access points and Persistent Volume Claim (PVC) and consume it from a pod.
 
+Amazon Elastic File System is a cloud storage service provided by Amazon Web Services designed to provide scalable, elastic, concurrent with some restrictions, and encrypted file storage for use with both AWS cloud services and on-premises resources.
+What are the different types of EFS?
+These include EFS Standard, EFS Standard–Infrequent Access (Standard-IA), EFS One Zone, and EFS One Zone–Infrequent Access (EFS One Zone-IA).
+Focus: Mounting EFS as Volume for K8s
+#### EFS CSI driver supports Static Provisioning and Dynamic Provisioning
+Dynamic Provisioning creates an access point for each PV. This means an AWS EFS file system has to be created manually on AWS first and should be provided as an input to the storage class parameter. Here a PVC is used to dynamically provision the PV. No PV is created here, because the PV will be created automatically and then the PVC will claim the PV. So, K8s requests EFS to create an ACCESS POINT in the file system which will be used as a mountpoint for the PV. Also, key, the EFS file ID should be provided as input value to the K8s Storage Class.
+ Static provisioning, AWS EFS file system needs to be created manually on AWS first. After that it can be mounted inside a container as a volume using the EFS CSI driver. Creating the PV here is a manual Process
+### EFS CSI DRIVER
+The EFS CSI Driver Amazon EKS Add-on provides a CSI interface that allows Kubernetes clusters running on AWS to manage the lifecycle of Amazon EFS volumes for persistent storage. EFS CSI driver supports both dynamic and static provisioning of storage 
+### EFS Mount Target(s)
+After you create an Amazon EFS file system, you can create mount targets. For Amazon EFS file systems that use Standard storage classes, you can create a mount target in each Availability Zone in an AWS Region. Then you can mount the file system on compute instances, including Amazon EC2, Amazon ECS, and AWS Lambda in your virtual private cloud (VPC). The following diagram shows an Amazon EFS file system that uses Standard storage classes, with mount targets created in all Availability Zones in the VPC.
+ 
+### EFS Mount Target Security Groups
+The mount target security group acts as a virtual firewall that controls the traffic. For example, it determines which clients can access the file system. This section explains the following:
+•	Managing mount target security groups and enabling traffic.
+•	Mounting the file system on your clients.
+•	NFS-level permissions considerations. 
+
+### EFS ACCESS POINT
+Amazon EFS access points are application-specific entry points into an EFS file system that make it easier to manage application access to shared datasets. Access points can enforce a user identity, including the user's POSIX groups, for all file system requests that are made through the access point.
+Creating the root directory for an access point - To create a root directory, you have to configure the root directory ownership and permission by using the following attributes when creating an access point: 
+•	OwnerUid – The numeric POSIX user ID to use as the root directory owner.
+•	OwnerGiD – The numeric POSIX group ID to use as the root directory owner group.
+•	Permissions – The Unix mode of the directory. 
+
+### Amazon EFS replication
+You can use Amazon EFS replication to create a replica of your Amazon EFS file system in the AWS Region of your preference. When you enable replication on an EFS file system, Amazon EFS automatically and transparently replicates the data and metadata on the source file system to a new destination EFS file system. To manage the process of creating the destination file system and keeping it synced with the source file system, Amazon EFS uses a replication configuration.
+Using access points in IAM policies. You can use an IAM policy to enforce that a specific NFS client, identified by its IAM role, can only access a specific access point.
+
+
+https://github.com/kubernetes-sigs/aws-efs-csi-driver/blob/master/examples/kubernetes/dynamic_provisioning/README.md
+https://github.com/kubernetes-sigs/aws-efs-csi-driver/blob/master/docs/README.md
